@@ -4,6 +4,12 @@ Curated brake skills for AI coding agents — pause, align, reset context.
 
 These are slash-command skills for [Claude Code](https://claude.com/claude-code) that restrain or redirect agent behavior along three axes: **eagerness** (slow it down), **alignment** (make it surface assumptions), and **context-rot** (reset state cleanly).
 
+## Cheatsheet
+
+A one-page visual guide — *When to reach for which brake* — maps the three axes (eagerness, alignment, context-rot) to specific brake skills and shows when to reach for each.
+
+Refer to **[cheatsheet.pdf](cheatsheet.pdf)** to understand how these brakes work together.
+
 ## Install
 
 ```sh
