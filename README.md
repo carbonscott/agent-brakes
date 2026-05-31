@@ -34,7 +34,7 @@ If any target path already exists, install refuses to touch anything and tells y
 
 | Skill | One-liner |
 | --- | --- |
-| `/no-eager` | Respond in conversation only, no tool calls. |
+| `/no-eager` | Respond in conversation only; read-only tools to ground the answer, no state changes. |
 | `/clarify` | Pause for clarifying questions before any action. |
 | `/align` | Restate scope, target, method, and stopping condition before tool calls. |
 | `/breakdown` | Break down the questions or tasks in the prompt. |
