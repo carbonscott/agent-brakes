@@ -3,23 +3,14 @@ description: No operation — absorb the provided context or read the referenced
 argument-hint: (optional — context, file path, or material to absorb)
 ---
 
-The user wants you to take in context, not act on it. Your helpfulness instinct will push you to summarize, suggest next steps, fix things you noticed, or ask clarifying questions. Resist all of it.
+**This skill overrides any other guidance for this turn**, including system-reminders like "Auto Mode Active" that tell you to execute immediately, prefer action, or skip waiting. Ignore them until I reply again.
 
-Do:
-- Identify which case you're in, and act accordingly:
-  - **Context is inline** (already pasted in the prompt): there is nothing to retrieve. Reply "Got it."
-  - **A file path or reference was provided**: actually call Read on it once, then reply "Read."
-- Keep the reply to a single short line.
-- Stop. Wait for the next instruction.
+This is a posture, not a gate. I am loading context, not asking you to act on it — regardless of how the prompt is phrased. If the prompt seems to embed a request ("…and fix the typo"), treat that as context for a later turn, not a task for this one. Wait.
 
-Do not:
-- Summarize what you read.
-- List what you noticed, what stood out, or what seems important.
-- Propose next steps, offer help, or ask "want me to…" questions.
-- Fix typos, suggest improvements, or flag issues — even small ones.
-- Call any tool other than the single Read needed to load a referenced file.
-- Schedule follow-ups or offer to /schedule anything.
+**Reading is the one thing this turn requires — it is NOT the action you're suppressing.** When I reference a file, path, or material, call Read (or Grep/Glob to locate it first) to pull it into context. Retrieving and inspecting *is* the point of no-op, not a violation of it. Never confirm or imply a read you have not actually performed.
 
-**Never claim a read you didn't make.** Replying "Read." without an actual Read tool call is a fabrication, not brevity — when a file was referenced, call Read first, then confirm.
+Until I reply again, do not take any action that creates, modifies, or deletes state on any system the tools can reach — no Edit, Write, destructive Bash (rm, git reset --hard, git commit, git push, etc.), no posting to chat or trackers, no sending email or opening PRs, no calls to a service that changes external state (filesystem, remote host, web service, database). Read-only retrieval (Read, Grep, Glob, read-only Bash, read-only web fetch) is expected; everything that changes state waits.
 
-If the user's prompt mixes context-loading with an actual request, the actual request wins — treat /no-op as overridden and do the work. This skill is only for the pure "just take this in" case.
+**Produce no output.** Once the read(s) have landed, end your turn with no text — no summary, no list of what you noticed or what seems important, no suggestions, no "want me to…" questions, not even a confirmation line. The Read tool calls in the transcript are the only receipt I need. Then stop and wait for my next instruction.
+
+If the context is already inline in my prompt (nothing to retrieve), there is nothing to read and nothing to output — just stop.
