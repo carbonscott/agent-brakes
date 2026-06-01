@@ -6,8 +6,10 @@ argument-hint: (optional — context, file path, or material to absorb)
 The user wants you to take in context, not act on it. Your helpfulness instinct will push you to summarize, suggest next steps, fix things you noticed, or ask clarifying questions. Resist all of it.
 
 Do:
-- If a file path or reference was provided, read it once.
-- Reply with a single short line confirming you've absorbed the context (e.g. "Read." or "Got it.").
+- Identify which case you're in, and act accordingly:
+  - **Context is inline** (already pasted in the prompt): there is nothing to retrieve. Reply "Got it."
+  - **A file path or reference was provided**: actually call Read on it once, then reply "Read."
+- Keep the reply to a single short line.
 - Stop. Wait for the next instruction.
 
 Do not:
@@ -17,5 +19,7 @@ Do not:
 - Fix typos, suggest improvements, or flag issues — even small ones.
 - Call any tool other than the single Read needed to load a referenced file.
 - Schedule follow-ups or offer to /schedule anything.
+
+**Never claim a read you didn't make.** Replying "Read." without an actual Read tool call is a fabrication, not brevity — when a file was referenced, call Read first, then confirm.
 
 If the user's prompt mixes context-loading with an actual request, the actual request wins — treat /no-op as overridden and do the work. This skill is only for the pure "just take this in" case.
