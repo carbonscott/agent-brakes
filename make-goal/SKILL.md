@@ -14,8 +14,9 @@ If the user just asks **"what is `/goal`?"** (no goal to author), answer from
 
 ## The mental model
 
-A goal file is a **handoff** (cf. the `/handoff` skill) — but to a **loop
-executor + an evaluator**, not a one-shot reader. Two facts about its readers
+A goal file is a **self-contained brief for a cold reader** — it must work for
+someone with none of this conversation's context. But its reader isn't a one-shot
+human; it's a **loop executor + an evaluator**. Two facts about those readers
 drive the entire shape:
 
 - **Two readers.** The *executor* (Claude doing the work) reads the file once at
@@ -23,13 +24,14 @@ drive the entire shape:
   re-reads the **stop condition after every turn**, **cannot run tools**, judges
   only what's been **surfaced in the conversation**, and the condition is
   **hard-capped at 4,000 characters**. → keep a **tight, self-sufficient
-  `DONE WHEN` spine** and only **thin** context around it. This is the inverse of
-  a `/handoff` doc (fat-goal / thin-context, not fat-context / thin-goal).
-- **The hard inversion vs `/handoff`.** A handoff *keeps open threads live*. A
-  goal file must **close every one**. An ambiguous stop condition is a loop that
-  never ends or ends wrong. Your job is to drive ambiguity to zero.
+  `DONE WHEN` spine** and only **thin** context around it. So weight the file
+  **fat-goal / thin-context**: the condition carries the weight; surrounding
+  context stays minimal.
+- **Close every open thread.** A goal file must resolve all of them — an ambiguous
+  stop condition is a loop that never ends or ends wrong. Your job is to drive
+  ambiguity to zero.
 
-## Process — two phases, handoff-style (no interrogation)
+## Process — two phases (no interrogation)
 
 **Phase 1 — Draft & confirm.** Do not write a file yet.
 
@@ -45,8 +47,8 @@ drive the entire shape:
    least one criterion hard.
 4. Flag any gap or ambiguity **in prose** and ask for a free-text fix. **Do not
    run a structured interview.** If the input is too thin to produce observable
-   criteria, say so plainly and suggest running `/clarify` first (then come back) —
-   don't fabricate a goal. (Borrowed from `/handoff` rule #8.)
+   criteria, say so plainly and ask the user to fill the gaps before you draft —
+   don't fabricate a goal.
 5. Present the **draft file content** + a short **audit** (which criteria are hard
    vs soft, what you assumed, what's still open). **Wait** for approval or correction.
 
@@ -97,8 +99,8 @@ kickoff executor only.
 
 ## Rules
 
-1. **Zero open threads.** Every ambiguity is closed before you write. (The
-   inversion of `/handoff` rule #7.)
+1. **Zero open threads.** Every ambiguity is closed before you write — an
+   unresolved condition can't be evaluated.
 2. **Every criterion observable.** Proof baked into each one. The evaluator can't
    run tools — "the tests pass" works only because Claude runs them and the output
    lands in the transcript.
@@ -111,7 +113,8 @@ kickoff executor only.
    so in the file. Default **1–3** subagents per iteration; keep **max odd** so
    debate/vote rounds can't tie.
 7. **Name by task, not date. Tracked by default.**
-8. **Pointers over prose.** Don't restate the repo. (cf. `/handoff` rule #4.)
+8. **Pointers over prose.** Don't restate the repo; name the file/dir the executor
+   should read.
 
 ## Two archetypes (from real usage)
 
