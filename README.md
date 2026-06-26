@@ -44,6 +44,9 @@ If any target path already exists, install refuses to touch anything and tells y
 | `/no-op` | Absorb the provided context without acting on it. |
 | `/handoff` | Produce a self-contained handoff doc for a fresh agent or human. |
 | `/latent-demand` | Surface the broader aspirations or deeper needs behind the prompt. |
+| `/make-goal` | Author a runnable `/goal` prompt: infer a completion condition from the conversation, draft it for approval, and write a self-contained `.goal/<slug>.md`. |
+
+`/make-goal` is a companion **authoring** skill rather than a brake — it produces a goal artifact instead of restraining behavior — but ships here so the set stays together.
 
 ## Uninstall
 
@@ -56,7 +59,7 @@ Same flags as `install.sh` (`--project`, `--target=`).
 `uninstall.sh` only removes symlinks that point back into this repo. If you installed with `--copy`, the directories are plain copies — uninstall will skip them and you'll need to remove them manually:
 
 ```sh
-rm -rf ~/.claude/skills/{no-eager,clarify,align,breakdown,approval,formalize-plan,formalize-plan-delegated,no-op,handoff,latent-demand}
+rm -rf ~/.claude/skills/{no-eager,clarify,align,breakdown,approval,formalize-plan,formalize-plan-delegated,no-op,handoff,latent-demand,make-goal}
 ```
 
 ## Scope
