@@ -1,6 +1,6 @@
 ---
 name: make-goal
-description: Turn a wish into a runnable Claude Code /goal prompt. Infers the completion condition from the conversation, drafts it for approval, then writes a self-contained .goal/<slug>.md you run with `/goal @.goal/<slug>.md` (or paste into any harness). Generated goals delegate work to subagents by default (a min–max budget per iteration). Also explains what /goal is. Use for "make a goal", "formulate a goal prompt", "write a /goal condition", "turn this into a goal", "what is /goal".
+description: Turn a wish into a runnable Claude Code /goal prompt. Infers the completion condition from the conversation, drafts it for approval, then writes a self-contained .goal/<slug>.md you run with `/goal @.goal/<slug>.md` (or paste into any harness). Generated goals tell the executor to solve the problem with a team of subagents (a min–max team budget per iteration). Also explains what /goal is. Use for "make a goal", "formulate a goal prompt", "write a /goal condition", "turn this into a goal", "what is /goal".
 argument-hint: [what you want to accomplish — optional; defaults to the conversation]
 ---
 
@@ -73,7 +73,7 @@ drive the entire shape:
  preamble"): work across turns; after each turn check DONE WHEN against what's
  been surfaced; unmet → continue using the gap as the next directive; all met →
  stop; never stop early, never exceed the bound.>
-Run by dispatching subagents — at least <min>, at most <max> per iteration; do not do all the work in the main thread.
+You're the orchestrator of a team of subagents this run — team budget <min>–<max> per iteration. Solve the problem by putting the team to work: decompose it, delegate the pieces, then integrate and verify before the next iteration. Don't do it all yourself in the main thread.
 Bound: or stop after <N> turns.            # ALWAYS include a bound
 Run in Claude Code: /goal @.goal/<slug>.md
 
@@ -109,13 +109,15 @@ kickoff executor only.
 4. **Spine ≤4k and self-sufficient.** Keep context out of `DONE WHEN`.
 5. **Always include a bound** (`or stop after N turns`) — even pure-conditional
    goals get an escape hatch. (Generalizes "100 rows OR val_bpb < 0.95".)
-6. **Default every goal to subagent delegation.** In `## Run`, instruct the
-   executor to dispatch subagents — a hard floor of `min` (default **1**: at least
-   one subagent per iteration, so the main thread orchestrates instead of doing the
-   work itself) up to `max` (default **3**, kept **odd** so debate/vote rounds can't
-   tie). Write it as a firm directive with just the numbers — keep this rationale
-   here, out of the generated file. It's guidance to the executor, never a
-   `DONE WHEN` criterion (the evaluator can't see *how* work was done).
+6. **Frame the executor as orchestrating a team in every goal.** The point is to make
+   the agent *realize* it can solve the problem with a team of subagents rather than
+   doing everything itself. The produced `## Run` must name that team and its
+   per-iteration budget — a hard floor of `min` (default **1**: at least one subagent
+   per iteration) up to `max` (default **3**, kept **odd** for tie-breaking) — and tell
+   the agent to put the team to work: decompose, delegate, integrate, verify. Write it
+   as a clean directive with just the numbers; keep this rationale here, out of the
+   generated file. It's guidance to the executor, never a `DONE WHEN` criterion (the
+   evaluator can't see *how* work was done).
 7. **Name by task, not date. Tracked by default.**
 8. **Pointers over prose.** Don't restate the repo; name the file/dir the executor
    should read.
