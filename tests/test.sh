@@ -16,7 +16,6 @@ SKILLS=(
   no-op
   handoff
   latent-demand
-  make-goal
 )
 
 TMPROOT="$(mktemp -d)"
@@ -31,7 +30,7 @@ fresh_home() {
   echo "$d"
 }
 
-# ---------- Test 1: default install creates one symlink per skill ----------
+# ---------- Test 1: default install creates 10 symlinks ----------
 H="$(fresh_home)"
 HOME="$H" "$INSTALL" >/dev/null
 target="$H/.claude/skills"
@@ -42,16 +41,16 @@ for s in "${SKILLS[@]}"; do
   [ "$resolved" = "$expected" ] || fail "default install: $s resolves to $resolved, expected $expected"
 done
 count=$(find "$target" -mindepth 1 -maxdepth 1 -type l | wc -l)
-[ "$count" -eq "${#SKILLS[@]}" ] || fail "default install: found $count symlinks, expected ${#SKILLS[@]}"
-pass "default install creates ${#SKILLS[@]} symlinks"
+[ "$count" -eq 10 ] || fail "default install: found $count symlinks, expected 10"
+pass "default install creates 10 symlinks"
 
 # ---------- Test 2: collision refusal ----------
 if HOME="$H" "$INSTALL" >/dev/null 2>&1; then
   fail "second install should have failed but exited 0"
 fi
-# verify nothing was disturbed: same symlink count, no extras
+# verify nothing was disturbed: still 10 symlinks, no extras
 count=$(find "$target" -mindepth 1 -maxdepth 1 | wc -l)
-[ "$count" -eq "${#SKILLS[@]}" ] || fail "collision refusal: target has $count entries, expected ${#SKILLS[@]}"
+[ "$count" -eq 10 ] || fail "collision refusal: target has $count entries, expected 10"
 pass "collision refusal"
 
 # ---------- Test 3: --copy install ----------
@@ -109,7 +108,7 @@ HOME="$H" "$UNINSTALL" >/dev/null
 HOME="$H" "$INSTALL" >/dev/null
 target="$H/.claude/skills"
 count=$(find "$target" -mindepth 1 -maxdepth 1 -type l | wc -l)
-[ "$count" -eq "${#SKILLS[@]}" ] || fail "install/uninstall/install: found $count symlinks, expected ${#SKILLS[@]}"
+[ "$count" -eq 10 ] || fail "install/uninstall/install: found $count symlinks, expected 10"
 pass "install -> uninstall -> install cycle"
 
 # ---------- Test 8: --help exits 0 ----------

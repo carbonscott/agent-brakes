@@ -12,7 +12,6 @@ SKILLS=(
   no-op
   handoff
   latent-demand
-  make-goal
 )
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
